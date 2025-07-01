@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import RegisterPage from "../auth/register";
 import HomePage from "../pages/home";
 import LoginPage from "../auth/login";
+import PostPage from "../pages/post";
 
 const rute = [
   {
@@ -16,6 +17,10 @@ const rute = [
   {
     path: "/login",
     element: <LoginPage />,
+  },
+  {
+    path: "/post",
+    element: <PostPage />,
   },
 ];
 

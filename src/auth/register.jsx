@@ -7,14 +7,36 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { Link } from "react-router-dom";
 
+import { register } from "./authService";
+
 export default function RegisterPage() {
   const [showPassword, setShowPassword] = useState(false);
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      let reg = await register(email, password);
+      if (!reg) {
+        console.error("gagal register");
+      } else {
+        window.location.href = "/login";
+      }
+      alert("berhasil register");
+    } catch (er) {
+      alert(`error register ${er}`);
+      console.error(er);
+    }
+  };
 
   return (
     <section className="flex items-center justify-center min-h-screen bg-gradient-to-br from-sky-100 to-blue-200">
       <form
         className="flex flex-col justify-center w-full max-w-md gap-8 bg-white/90 p-10 rounded-2xl shadow-2xl border border-blue-200 transition-all"
-        action=""
+        onSubmit={handleSubmit}
       >
         <header className="flex flex-col items-center mb-2">
           <h1 className="text-3xl font-extrabold text-blue-700 mb-1">
@@ -38,6 +60,7 @@ export default function RegisterPage() {
             placeholder="example@mail.com"
             label={<span className="font-semibold text-blue-700">Email</span>}
             className=" rounded-md px-2 py-1 focus:ring-2 focus:ring-blue-300"
+            onChange={(e) => setEmail(e.target.value)}
             fullWidth
           />
 
@@ -62,6 +85,7 @@ export default function RegisterPage() {
                 </InputAdornment>
               ),
             }}
+            onChange={(e) => setPassword(e.target.value)}
             fullWidth
           />
         </div>
